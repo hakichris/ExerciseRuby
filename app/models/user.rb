@@ -5,4 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
  has_many :customer_orders
+
+ validates :fname, presence: true
+ validates :lname, presence: true
 end
