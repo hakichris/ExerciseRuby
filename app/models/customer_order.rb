@@ -1,4 +1,6 @@
 class CustomerOrder < ApplicationRecord
+    belongs_to :user
+
     validates :name, presence: true
     validates :address, presence: true
     validates :amount_ordered, presence: true, numericality: {only_integer: true, greater_than:0}

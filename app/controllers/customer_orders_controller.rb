@@ -3,7 +3,7 @@ class CustomerOrdersController < ApplicationController
 
   # GET /customer_orders or /customer_orders.json
   def index
-    @customer_orders = CustomerOrder.all
+    @customer_orders =current_user.customer_orders.find(params[:id]) if @user.present?
   end
 
   # GET /customer_orders/1 or /customer_orders/1.json
@@ -12,7 +12,7 @@ class CustomerOrdersController < ApplicationController
 
   # GET /customer_orders/new
   def new
-    @customer_order = CustomerOrder.new
+    @customer_order = current_user.customer_orders.new
   end
 
   # GET /customer_orders/1/edit
@@ -21,7 +21,7 @@ class CustomerOrdersController < ApplicationController
 
   # POST /customer_orders or /customer_orders.json
   def create
-    @customer_order = CustomerOrder.new(customer_order_params)
+    @customer_order = current_user.customer_orders.new(customer_order_params)
 
     respond_to do |format|
       if @customer_order.save
@@ -36,6 +36,7 @@ class CustomerOrdersController < ApplicationController
 
   # PATCH/PUT /customer_orders/1 or /customer_orders/1.json
   def update
+    @customer_order = current_user.customer_orders.find(params[:id])
     respond_to do |format|
       if @customer_order.update(customer_order_params)
         format.html { redirect_to customer_order_url(@customer_order), notice: "Customer order was successfully updated." }
@@ -49,6 +50,7 @@ class CustomerOrdersController < ApplicationController
 
   # DELETE /customer_orders/1 or /customer_orders/1.json
   def destroy
+    @customer_order = current_user.customer_orders.find(params[:id])
     @customer_order.destroy!
 
     respond_to do |format|
